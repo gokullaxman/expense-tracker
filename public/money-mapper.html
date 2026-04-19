@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Money Mapper Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="layout-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <i data-lucide="layers" class="brand-icon"></i>
+        <h1>Money Mapper</h1>
+      </div>
+      
+      <div class="balance-widget">
+        <span class="widget-label">Running Net Balance</span>
+        <h2 id="balance" class="widget-value">₹0.00</h2>
+      </div>
+
+      <div class="form-container">
+        <div class="card-header">
+          <h3>Log Transaction</h3>
+          <p class="subtitle">Record an income or expense.</p>
+        </div>
+        
+        <form id="form">
+          <div class="form-row">
+            <div class="form-control half">
+              <label for="type">Type</label>
+              <select id="type" required>
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+              </select>
+            </div>
+            <div class="form-control half">
+              <label for="amount">Amount</label>
+              <div class="input-wrapper">
+                <span class="prefix">₹</span>
+                <input type="number" id="amount" placeholder="0.00" min="1" step="0.01" required />
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-control">
+            <label for="category">Category</label>
+            <select id="category" required>
+              <option value="Food">Food</option>
+              <option value="Bills">Bills</option>
+              <option value="Travel">Travel</option>
+              <option value="Health">Health</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Education">Education</option>
+              <option value="Salary">Salary</option>
+              <option value="Other" selected>Other</option>
+            </select>
+          </div>
+          
+          <div class="form-control">
+            <label for="text">Description</label>
+            <input type="text" id="desc" placeholder="What was this for?" required maxlength="100"/>
+          </div>
+          
+          <button type="submit" class="btn primary-btn add-btn">
+            <i data-lucide="plus" class="btn-icon"></i> Add Record
+          </button>
+        </form>
+        <div id="error-msg" class="error-msg"></div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="main-header">
+        <div class="header-titles">
+          <h2>Dashboard</h2>
+          <p class="subtitle">A clear view of your finances.</p>
+        </div>
+        <button id="clearAllBtn" class="btn outline-btn" title="Clear all transactions">
+          <i data-lucide="trash-2" class="btn-icon"></i> Clear Data
+        </button>
+      </header>
+
+      <section class="metrics-row">
+        <div class="metric-card">
+          <div class="metric-icon-bg bg-green">
+            <i data-lucide="trending-up" class="icon-green"></i>
+          </div>
+          <div class="metric-details">
+            <span class="metric-label">Total Income</span>
+            <p id="money-plus" class="money plus">+₹0.00</p>
+          </div>
+        </div>
+        
+        <div class="metric-card">
+          <div class="metric-icon-bg bg-red">
+            <i data-lucide="trending-down" class="icon-red"></i>
+          </div>
+          <div class="metric-details">
+            <span class="metric-label">Total Expenses</span>
+            <p id="money-minus" class="money minus">-₹0.00</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="dashboard-grid">
+        <div class="history-container">
+          <div class="card-header">
+            <h3>Recent Activity</h3>
+            <p class="subtitle">Your latest transactions.</p>
+          </div>
+          <ul id="list" class="list"></ul>
+        </div>
+        
+        <div class="charts-container">
+          <div class="card-header">
+            <h3>Analytics Overview</h3>
+          </div>
+          <div class="charts-grid">
+            <div class="chart-wrapper pie-wrapper">
+              <h4>Income vs Expense</h4>
+              <canvas id="pieChart"></canvas>
+            </div>
+            <div class="chart-wrapper bar-wrapper">
+              <h4>Expenses by Category</h4>
+              <canvas id="barChart"></canvas>
+            </div>
+            <div class="chart-divider" style="grid-column: 1 / -1; margin: 16px 0;"></div>
+            <div class="chart-wrapper trend-wrapper">
+              <h4>Daily Spending Trend</h4>
+              <canvas id="trendChart"></canvas>
+            </div>
+            <div class="chart-wrapper cashflow-wrapper">
+              <h4>Cash Flow (Last 7 Days)</h4>
+              <canvas id="cashflowChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
